@@ -13,9 +13,9 @@ public:
     std::cout << "  load\n";
     std::cout << RESET;
   }
-  // Tibe file class
 };
 
+// Tibe file class
 class TibeFile {
 public:
   void loadTibeFile() {
