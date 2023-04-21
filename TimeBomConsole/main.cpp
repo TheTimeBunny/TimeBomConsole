@@ -1,66 +1,40 @@
-#include "termcolors.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <vector>
 
-class Shell {
-public:
-  void help() {
-    std::cout << BLUE << "TIMEBOM CONSOLE\n" << RESET;
-    std::cout << "Commands:\n" << YELLOW;
-    std::cout << "  help\n";
-    std::cout << "  exit\n";
-    std::cout << "  load\n";
-    std::cout << RESET;
-  }
-};
-
-// Tibe file class
-class TibeFile {
-public:
-  void loadTibeFile() {
-    std::cout << BOLDMAGENTA << "Loading .tibe archive...\n" << RESET;
-  }
-};
-
-// Settings for the console and engine
-class Settings {
-public:
-  class Screen {
-  public:
-    int frameRate = 60;
-    int screenWidth = 1200;
-    int screenHeight = 800;
-  };
-
-  class Sound {
-    int volume = 100;
-  };
-
-  class TibeFiles {
-    std::string tibeDir;
-    std::string tibeName;
-  };
-};
+#include "settings.hpp"
+#include "shell.hpp"
+#include "termcolors.hpp"
+#include "tibefile.hpp"
 
 // Run a command from function parameter
-TibeFile tibe;
-Settings consoleSettings;
-Shell shell;
+TB_TibeFile tibe;
+TB_Settings console_settings;
+TB_Shell shell;
 
 int main() {
-  bool shellIsNotClosed = true; // I really like verbose-ish naming schemes
-  std::cout << "TimeBom Console\n";
-  while (shellIsNotClosed) {
-    std::cout << BLUE << "> " << RESET;
-    std::string command;
-    std::getline(std::cin, command);
-    if (command == "exit") {
-      shellIsNotClosed = false;
-    } else if (command == "help") {
-      shell.help();
-    } else if (command == "load") {
-      tibe.loadTibeFile();
-    }
-  }
+	// Is the shell closed? If not, take input and do commands with it.
+	bool shell_is_closed = false;
+
+	console_settings.app_screen_config.screen_settings(800, 600, 60);
+	std::cout << "display height: "
+		  << console_settings.app_screen_config.screen_height << "\n";
+	std::cout << "display width: "
+		  << console_settings.app_screen_config.screen_width << "\n";
+
+	while (!shell_is_closed) {
+		std::cout << BLUE << "> " << RESET;
+		std::string command;
+		std::getline(std::cin, command);
+
+		if (command == "exit") {
+			shell_is_closed = true;
+		} else if (command == "help") {
+			shell.help();
+		} else if (command == "load") {
+			// TODO: Implement loading
+		}
+	}
 }
