@@ -9,7 +9,6 @@
 #include "termcolors.hpp"
 #include "tibefile.hpp"
 
-// Run a command from function parameter
 TB_TibeFile tibe;
 TB_Settings console_settings;
 TB_Shell shell;
